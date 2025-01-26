@@ -54,6 +54,8 @@ The application uses TensorFlow's pre-trained **PoseNet model** for pose detecti
 - **Optimized for Performance:** Runs efficiently on both CPU and GPU.
 - **Scalability:** Can be extended to multiple people detection in a single frame.
 
+[Architecture](![image](https://github.com/user-attachments/assets/5e7190d8-b069-48d3-ac35-2c816e1b6674))
+
 ---
 
 ## App Interface 🎨

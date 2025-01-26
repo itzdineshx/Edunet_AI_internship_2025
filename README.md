@@ -82,7 +82,7 @@ The interface is designed to be intuitive and user-friendly:
 ## Demo 🎥
 
 - **Image Input:** Example results of pose estimation from input images.
-![Demo image](Demo/pose_sports.png)
+![Demo image](Demo/Advanced-Pose-Estimation_sample.png)
 ---
 
 ## How to Run the App 🚀

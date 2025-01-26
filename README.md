@@ -84,7 +84,7 @@ The interface is designed to be intuitive and user-friendly:
 ---
 
 ## How to Run the App 🚀
-![Use App](Demo/Demo.gif)
+![Use App](Demo/Demo_video.gif)
 
 ### Prerequisites 🛠️
 - Python 3.8 or higher

@@ -4,6 +4,9 @@ This project is a **Pose Estimation Application** designed to provide comprehens
 
 ---
 
+Try Now : https://humanpose-estimation-apps.streamlit.app/
+
+---
 ## Features ✨
 
 - **Real-time Pose Detection:** Supports analysis for images and videos.
@@ -79,7 +82,7 @@ The interface is designed to be intuitive and user-friendly:
 - **Image Input:** Example results of pose estimation from input images.
 ## Demo - Video Input 🎥
 
-[Watch Video Output (run.mov)](Demo/streamlit-app-2025-01-26-20-01-13.webm)
+[Watch Demo](Edunet_AI_internship_2025/Demo/streamlit-app-2025-01-26-20-01-13.webm)
 
 
 

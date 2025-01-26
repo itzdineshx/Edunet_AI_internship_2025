@@ -82,6 +82,12 @@ The interface is designed to be intuitive and user-friendly:
 - **Image Input:** Example results of pose estimation from input images.
 ## Demo - Video Input 🎥
 
+<video width="640" height="360" controls>
+  <source src="Demo/videos/run.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+
 [Watch Demo](Edunet_AI_internship_2025/Demo/streamlit-app-2025-01-26-20-01-13.webm)
 
 

@@ -22,7 +22,7 @@ Try Now : [Live Link}(https://humanpose-estimation-apps.streamlit.app/)
 ```plaintext
 EDUNET_AI_INTERNSHIP_2025
 ├── Demo
-│   ├── int.txt
+│   ├── Demo_video.gif
 │   ├── images
 │   │   ├── OutPut-image.png
 │   │   ├── pose-gif.gif

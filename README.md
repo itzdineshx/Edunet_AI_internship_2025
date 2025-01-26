@@ -70,7 +70,7 @@ The interface is designed to be intuitive and user-friendly:
   2. Select an appropriate file for analysis.
   3. Ensure the file is clear and high-quality for best results.
 
-![App Interface](Advanced-Pose-Estimation_interference.png)
+![App Interface]Demo/Advanced-Pose-Estimation_interference.png)
 
 ---
 

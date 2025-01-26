@@ -77,10 +77,7 @@ The interface is designed to be intuitive and user-friendly:
 ## Demo 🎥
 
 - **Image Input:** Example results of pose estimation from input images.
-  ![Output Image](Demo/images/OutPut-image.png)
-
-- **Video Input:** Dynamic pose estimation for video inputs.
-  ![Output Video](Demo/images/pose-gif.gif)
+  ![Output Image](Demo/streamlit-app-2025-01-26-20-01-13.webm)
 
 ---
 

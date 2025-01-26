@@ -141,7 +141,7 @@ def main():
     st.markdown("Comprehensive pose analysis and biomechanical insights")
 
     # Model Path Configuration
-    MODEL_PATH = "/workspaces/Edunet_AI_internship_2025/models/graph_opt.pb"
+    MODEL_PATH = "/workspaces/Edunet_AI_internship_2025/src/graph_opt.pb"
 
     # Sidebar Configuration
     st.sidebar.header("Pose Analysis Settings")

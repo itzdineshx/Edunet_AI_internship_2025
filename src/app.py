@@ -120,18 +120,29 @@ class PoseAnalyzer:
     def _calculate_distance(self, point1, point2):
         return np.linalg.norm(np.array(point1) - np.array(point2))
 
-def generate_report(image, pose_image, metrics_df, pose_image_path, original_image_path):
-    # Create a zip file in memory
-    report_zip = BytesIO()
-    with zipfile.ZipFile(report_zip, mode='w', compression=zipfile.ZIP_DEFLATED) as zip_file:
-        # Save pose images to zip
-        zip_file.writestr("pose_image.png", pose_image.tobytes())
-        zip_file.writestr("original_image.png", image.tobytes())
 
-        # Save metrics to CSV
-        csv_data = metrics_df.to_csv(index=False)
+def generate_report(original_image, pose_image, metrics_df):
+    """Generate a ZIP report with properly encoded images and CSV data"""
+    report_zip = BytesIO()
+    
+    with zipfile.ZipFile(report_zip, 'w', compression=zipfile.ZIP_DEFLATED) as zip_file:
+        # Save original image as PNG
+        with BytesIO() as buffer:
+            Image.fromarray(original_image).save(buffer, format='PNG')
+            zip_file.writestr("original_image.png", buffer.getvalue())
+
+        # Save pose image (convert BGR to RGB for proper color representation)
+        with BytesIO() as buffer:
+            # Convert OpenCV's BGR format to RGB
+            rgb_image = cv2.cvtColor(pose_image, cv2.COLOR_BGR2RGB)
+            Image.fromarray(rgb_image).save(buffer, format='PNG')
+            zip_file.writestr("pose_image.png", buffer.getvalue())
+
+        # Save metrics as CSV with proper encoding
+        csv_data = metrics_df.to_csv(index=False).encode('utf-8')
         zip_file.writestr("body_metrics.csv", csv_data)
 
+    report_zip.seek(0)  # Reset buffer position to beginning
     return report_zip
 
 def main():
@@ -141,7 +152,7 @@ def main():
     st.markdown("Comprehensive pose analysis and biomechanical insights")
 
     # Model Path Configuration
-    MODEL_PATH = "src/graph_opt.pb"
+    MODEL_PATH = "/workspaces/Edunet_AI_internship_2025/src/graph_opt.pb"
 
     # Sidebar Configuration
     st.sidebar.header("Pose Analysis Settings")
@@ -284,39 +295,31 @@ def main():
                     st.warning("This feature is available in future versions.")
 
                 # Generate report
-                report_zip = generate_report(image, pose_image, metrics_df, pose_image_path="pose_image.png", original_image_path="original_image.png")
+                # Replace the existing generate_report call with:
+                report_zip = generate_report(image, pose_image, metrics_df)
                 st.download_button(label="Download Pose Analysis Report", 
                                    data=report_zip.getvalue(), 
                                    file_name="pose_analysis_report.zip", 
                                    mime="application/zip")
 
-                # Add LinkedIn and GitHub Links at the bottom
+
+                # Footer
                 st.markdown("---")
-                st.markdown("### Connect with me!")
-
-                # Create the LinkedIn and GitHub buttons with logos
-                col1, col2 = st.columns(2)
-
-                with col1:
-                    st.markdown(
-                        """
-                        [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dinesh-x/)
-                        """, unsafe_allow_html=True)
-
-                with col2:
-                    st.markdown(
-                        """
-                        [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/itzdineshx/Edunet_AI_internship_2025)
-                        """, unsafe_allow_html=True)
-
-                # Add copyright and attribution at the end
-                st.markdown("---")
-                st.markdown("""  
-                    This project was developed as part of the **All India Council for Technical Education (AICTE)** Internship on **AI: Transformative Learning** with **@Techsaksham**, a collaborative initiative by **Microsoft & SAP**, in partnership with **AICTE**.  
-                    Special thanks to **ChatGPT** for assisting in developing this website.
-                """)
                 st.markdown("""
-                    &copy; 2025 Dinesh S | All rights reserved.""")
+                <div style="text-align: center; padding: 20px;">
+                    <p>Developed with ❤️ as part of AICTE Internship on AI: Transformative Learning with Techsaksham, a collaborative initiative by Microsoft & SAP, in partnership with AICTE.  
+                    Special thanks to ChatGPT for assisting in developing this website.</p>
+                    <div style="display: flex; justify-content: center; gap: 20px;">
+                        <a href="https://www.linkedin.com/in/dinesh-x/">
+                            <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">
+                        </a>
+                        <a href="https://github.com/itzdineshx">
+                            <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white">
+                        </a>
+                    </div>
+                    <p style="margin-top: 20px;">© 2025 All rights reserved</p>
+                </div>
+                """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()

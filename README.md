@@ -4,7 +4,7 @@ This project is a **Pose Estimation Application** designed to provide comprehens
 
 ---
 
-Try Now : [Live Link](https://humanpose-estimation-apps.streamlit.app/)
+Try Now : [Live Link]([https://humanpose-estimation-apps.streamlit.app/](https://advanced-humanpose-estimation.streamlit.app/))
 
 ---
 ## Features ✨

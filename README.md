@@ -1,4 +1,4 @@
-# Advanced Human Pose Estimation 🤖
+# Advanced Human Pose Estimation (version 1)🤖
 
 This project is a **Pose Estimation Application** designed to provide comprehensive pose analysis and insights into biomechanics. It utilizes cutting-edge machine learning models for accurate pose detection and analysis, offering users a powerful tool for applications like sports analysis 🏃‍♂️, fitness tracking 💪, and more.
 

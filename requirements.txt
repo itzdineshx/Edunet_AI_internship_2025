@@ -1,0 +1,11 @@
+streamlit
+opencv-python
+numpy
+pandas
+plotly
+Pillow
+mediapipe
+tensorflow
+imageio
+streamlit-webrtc
+matplotlib

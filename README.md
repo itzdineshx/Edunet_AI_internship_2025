@@ -1,146 +1,197 @@
 # Advanced Human Pose Estimation (version 1)🤖
 
-This project is a **Pose Estimation Application** designed to provide comprehensive pose analysis and insights into biomechanics. It utilizes cutting-edge machine learning models for accurate pose detection and analysis, offering users a powerful tool for applications like sports analysis 🏃‍♂️, fitness tracking 💪, and more.
+**PoseJi** is an advanced human pose estimation application designed to provide comprehensive pose analysis and biomechanical insights. Leveraging state‐of‐the‐art machine learning models, the app supports real‑time detection, detailed metrics, and intuitive visualization for applications in sports analysis, fitness tracking, rehabilitation, and more.
 
 ---
 
-Try Now : [Live Link]([https://humanpose-estimation-apps.streamlit.app/](https://advanced-humanpose-estimation.streamlit.app/))
+## Live Demo
 
----
-## Features ✨
-
-- **Real-time Pose Detection:** Supports analysis for images and videos.
-- **Customizable Settings:** Adjust confidence thresholds and choose between analysis modes.
-- **User-Friendly Interface:** Simple drag-and-drop functionality for uploading media files.
-- **Detailed Output:** Visualized key points and skeletal connections for accurate pose estimation.
-- **Output Formats:** Provides both visual and JSON-based output for further integration.
+Try it now: [Advanced PoseJi App](https://advanced-humanpose-estimation.streamlit.app/)
 
 ---
 
-## Project Structure 🗂️
+## Features
+
+- **Real-time Pose Detection:**  
+  Analyze images and videos using advanced models for fast and accurate pose estimation.
+
+- **Customizable Settings:**  
+  Adjust parameters like confidence threshold and calibration factor to suit your needs.
+
+- **Multiple Analysis Modes:**  
+  Choose from basic pose detection, biomechanical analysis (joint angles, posture evaluation), detailed metrics, and 3D visualization.
+
+- **Video & Image Processing:**  
+  Upload images (PNG, JPG, JPEG) and videos (MP4, AVI, MOV, GIF) for detailed pose analysis. Extract skeleton overlays and download results.
+
+- **Live Webcam Integration:**  
+  Access your device’s webcam for live pose estimation, posture feedback, and exercise analysis (e.g., squat counting).
+
+- **Session Management:**  
+  Save session outputs (images, videos, metrics) and download all results as a ZIP file.
+
+- **User-Friendly Interface:**  
+  Designed with a modern, mobile-responsive layout and an enhanced sidebar for easy navigation.
+
+---
+
+## Project Structure
 
 ```plaintext
-Directory structure:
-└── itzdineshx-edunet_ai_internship_2025/
-    ├── README.md
-    ├── LICENSE
-    ├── requirements.txt
-    ├── Demo/
-    │   ├── images/
-    │   └── videos/
-    │       └── streamlit-app-2025-01-26-20-01-13.webm
-    ├── assets/
-    │   └── images/
-    │       └── videos/
-    ├── internship_files/
-    ├── models/
-    │   ├── graph_opt.pb
-    │   ├── movenet_lightning_fp16.tflite
-    │   └── saved_model.pb
-    ├── src/
-    │   ├── graph_opt.pb
-    │   ├── movenet_lightning_fp16.tflite
-    │   ├── saved_model.pb
-    │   └── app/
-    │       ├── advanced_pose_app.py
-    │       ├── app.py
-    │       ├── pose_estimation.py
-    │       ├── pose_estimation_Video.py
-    │       ├── test.py
-    │       └── test2.py
-    └── .devcontainer/
-        └── devcontainer.json
+itzdineshx-edunet_ai_internship_2025/
+├── README.md
+├── LICENSE
+├── requirements.txt
+├── Demo/
+│   ├── images/
+│   │   └── Advanced-Pose-Estimation_sample.png
+│   └── videos/
+│       └── Demo_video.gif
+├── assets/
+│   └── images/         # Additional UI assets
+├── models/
+│   ├── graph_opt.pb
+│   ├── movenet_lightning_fp16.tflite
+│   └── saved_model.pb
+├── src/
+│   ├── graph_opt.pb
+│   ├── movenet_lightning_fp16.tflite
+│   ├── saved_model.pb
+│   └── app/
+│       ├── advanced_pose_app.py
+│       ├── app.py
+│       ├── pose_estimation.py
+│       ├── pose_estimation_Video.py
+│       ├── test.py
+│       └── test2.py
+└── .devcontainer/
+    └── devcontainer.json
 ```
 
 ---
 
-## Model Details 🤖
+## Model Details
 
-The application uses TensorFlow's pre-trained **PoseNet model** for pose detection. The key features of this model include:
+The application supports multiple pose estimation models:
 
-- **Keypoint Detection:** Identifies major joints such as elbows, knees, and shoulders.
-- **Skeletal Visualization:** Draws connections between keypoints to create a skeletal representation.
-- **Optimized for Performance:** Runs efficiently on both CPU and GPU.
-- **Scalability:** Can be extended to multiple people detection in a single frame.
+- **OpenPose:**  
+  Uses OpenCV’s DNN module to load the `graph_opt.pb` model for detecting keypoints and drawing skeletal connections.
 
-![image](https://github.com/user-attachments/assets/11d0268e-83be-4d16-a325-56a6ac34d823)
+- **MediaPipe Pose:**  
+  Utilizes MediaPipe’s Pose solution for efficient, real‑time pose estimation with built‑in drawing utilities for skeleton visualization.
+
+- **MoveNet:**  
+  Employs TensorFlow Lite’s MoveNet model (`movenet_lightning_fp16.tflite`) for high-speed, accurate pose detection.
 
 ---
 
-## App Interface 🎨
+## App Interface
 
-The interface is designed to be intuitive and user-friendly:
-
-### Pose Analysis Settings ⚙️
-- **Confidence Threshold:** Adjustable slider to control the accuracy of detected poses.
-- **Analysis Mode:** Dropdown menu to toggle between:
+### Pose Analysis Settings
+- **Confidence Threshold:**  
+  Adjust the minimum confidence level for keypoint detection.
+- **Calibration Factor:**  
+  Scale distance-based metrics for personalized analysis.
+- **Analysis Mode:**  
+  Select from:
   - Basic Pose Detection
-  - Advanced Analysis (e.g., angles, postural evaluation).
+  - Biomechanical Analysis (angles, posture evaluation)
+  - Detailed Metrics
+  - 3D Pose Visualization
+  - Video Pose Estimation
+  - Live Webcam Pose Detection
+  - Real‑time Posture Feedback
+  - Exercise Analysis & Coaching
+  - Session History
+- **Exercise Analysis:**  
+  Choose an exercise type (currently supports Squats) for tracking repetitions.
 
-### Upload Section 📤
-- Drag and drop your file (images: PNG, JPG, JPEG) into the designated area.
-- A clear set of instructions is displayed to guide users:
-  1. Click the "Browse Files" button.
-  2. Select an appropriate file for analysis.
-  3. Ensure the file is clear and high-quality for best results.
+### Upload Section
+- **Image Upload:**  
+  Drag and drop PNG, JPG, or JPEG files.
+- **Video Upload:**  
+  Upload MP4, AVI, MOV, or GIF files for real-time analysis.
+- **Live Webcam:**  
+  Access live video feed for instant pose estimation.
 
-![App Interface](Demo/Advanced-Pose-Estimation_interference.png)
+### Output and Session Management
+- **Realtime Metrics:**  
+  View live updates on joint angles and other metrics during processing.
+- **Download Options:**  
+  Download individual outputs (images, videos, metrics) or all session outputs as a ZIP archive.
+- **Session History:**  
+  Save and review previous sessions with detailed logs and metrics.
 
 ---
 
-## Demo 🎥
+## Demo
 
-- **Image Input:** Example results of pose estimation from input images.
-![Demo image](Demo/Advanced-Pose-Estimation_sample.png)
+### Sample Image
+![Pose Estimation Sample](Demo/images/Advanced-Pose-Estimation_sample.png)
+
+### Demo Video
+![Demo Video](Demo/videos/Demo_video.gif)
+
 ---
 
-## How to Run the App 🚀
-![Use App](Demo/Demo_video.gif)
+## How to Run the App
 
-### Prerequisites 🛠️
+### Prerequisites
 - Python 3.8 or higher
-- Install dependencies from `requirements.txt` using:
+- Install dependencies with:
+  ```bash
+  pip install -r requirements.txt
+  ```
 
-```bash
-pip install -r requirements.txt
-```
-
-### Running the Application 💻
+### Running the Application
 1. Navigate to the `src` directory.
 2. Start the Streamlit app:
-
-```bash
-streamlit run app.py
-```
-
-3. Open the provided local or network URL in your browser to interact with the app.
+   ```bash
+   streamlit run app.py
+   ```
+3. Open the provided URL in your browser to interact with the app.
 
 ---
 
-## Use Cases 🌟
+## Use Cases
 
-- **Sports Training:** Analyze athletes' movements for performance optimization 🏋️‍♂️.
-- **Rehabilitation:** Track patients' recovery progress through biomechanical insights 🩺.
-- **Fitness Tracking:** Enhance workout sessions by providing feedback on postures 🏃‍♀️.
-- **Gaming:** Integrate pose estimation into AR/VR games for an interactive experience 🎮.
+- **Sports Training:**  
+  Analyze and optimize athletes' movements.
 
----
+- **Fitness Tracking:**  
+  Monitor posture and exercise form to improve workouts.
 
-## Future Enhancements 🔮
+- **Rehabilitation:**  
+  Track progress in physical therapy and recovery.
 
-- **Real-time Webcam Support:** Enable live pose detection through webcams.
-- **Advanced Insights:** Include postural corrections and biomechanical analysis.
-- **Mobile Compatibility:** Optimize for use on mobile devices 📱.
-- **Multi-Person Detection:** Extend support for detecting multiple subjects in a single frame.
-- **Integration APIs:** Offer REST APIs for third-party integration 🔗.
+- **Gaming & AR/VR:**  
+  Integrate pose estimation into interactive applications.
 
 ---
 
-## Contributors 🤝
-This application is part of the Edunet AI Internship 2025 program. Contributions to improve and extend its functionality are welcome.
+## Future Enhancements
+
+- **Advanced Real-Time Feedback:**  
+  More in-depth posture analysis and exercise coaching.
+- **Multi-Person Detection:**  
+  Extend support for multiple people in a single frame.
+- **Mobile Optimization:**  
+  Further enhance the mobile user experience.
+- **Integration APIs:**  
+  Offer REST APIs for third-party integration.
 
 ---
 
-## License 📜
-This project is licensed under the Apache License 2.0. See the LICENSE file for more details.
+## Contributors
 
+This project is part of the Edunet AI Internship 2025 program. Contributions are welcome to further enhance functionality and extend features.
+
+---
+
+## License
+
+This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for more details.
+
+---
+
+**PoseJi © 2025 DINESH S All Rights Reserved**

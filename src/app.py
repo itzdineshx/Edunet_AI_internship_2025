@@ -1,4 +1,9 @@
 import streamlit as st
+st.set_page_config(
+    page_title="PoseJi", 
+    page_icon="icons8-floating-guru-30.png", 
+    layout="wide"
+)
 import numpy as np
 import cv2
 import pandas as pd

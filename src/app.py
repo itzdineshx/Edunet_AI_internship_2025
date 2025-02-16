@@ -1,7 +1,7 @@
 import streamlit as st
 st.set_page_config(
     page_title="PoseJi", 
-    page_icon="icons8-floating-guru-30.png", 
+    page_icon="assets/images/poseji-logo.png", 
     layout="wide"
 )
 import numpy as np

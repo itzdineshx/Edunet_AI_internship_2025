@@ -20,27 +20,36 @@ Try Now : [Live Link](https://humanpose-estimation-apps.streamlit.app/)
 ## Project Structure 🗂️
 
 ```plaintext
-EDUNET_AI_INTERNSHIP_2025
-├── Demo
-│   ├── Demo_video.gif
-│   ├── images
-│   │   ├── OutPut-image.png
-│   │   ├── pose-gif.gif
-│   │   ├── run.jpg
-│   │   ├── stand.jpg
-│   └── models
-│       └── graph_opt.pb
-├── src
-│   ├── app.py  # Streamlit app entry point
-│   ├── pose_estimation_Video.py  # Script for video-based pose detection
-│   ├── pose_estimation.py  # Script for image-based pose detection
-│
-├── videos
-│   ├── output.mov
-│   ├── run.mov
-│   └── run1.mp4
-├── requirements.txt
-├── README.md  # Project documentation
+Directory structure:
+└── itzdineshx-edunet_ai_internship_2025/
+    ├── README.md
+    ├── LICENSE
+    ├── requirements.txt
+    ├── Demo/
+    │   ├── images/
+    │   └── videos/
+    │       └── streamlit-app-2025-01-26-20-01-13.webm
+    ├── assets/
+    │   └── images/
+    │       └── videos/
+    ├── internship_files/
+    ├── models/
+    │   ├── graph_opt.pb
+    │   ├── movenet_lightning_fp16.tflite
+    │   └── saved_model.pb
+    ├── src/
+    │   ├── graph_opt.pb
+    │   ├── movenet_lightning_fp16.tflite
+    │   ├── saved_model.pb
+    │   └── app/
+    │       ├── advanced_pose_app.py
+    │       ├── app.py
+    │       ├── pose_estimation.py
+    │       ├── pose_estimation_Video.py
+    │       ├── test.py
+    │       └── test2.py
+    └── .devcontainer/
+        └── devcontainer.json
 ```
 
 ---

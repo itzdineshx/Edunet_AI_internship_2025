@@ -1,4 +1,4 @@
-# Advanced Human Pose Estimation (version 1)🤖
+# PoseJi: Advanced Human Pose Estimation (version 1)🤖
 
 **PoseJi** is an advanced human pose estimation application designed to provide comprehensive pose analysis and biomechanical insights. Leveraging state‐of‐the‐art machine learning models, the app supports real‑time detection, detailed metrics, and intuitive visualization for applications in sports analysis, fitness tracking, rehabilitation, and more.
 

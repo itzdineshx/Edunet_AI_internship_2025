@@ -130,7 +130,7 @@ The application supports multiple pose estimation models:
 ![Pose Estimation Sample](Demo/images/Advanced-Pose-Estimation_sample.png)
 
 ### Demo Video
-![Demo Video](Demo/videos/Demo_video.gif)
+![Demo Video](Demo/images/Demo_video.gif)
 
 ---
 

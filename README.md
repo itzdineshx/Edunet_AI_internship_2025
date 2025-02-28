@@ -206,7 +206,7 @@ This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE
 <a href="https://www.linkedin.com/in/dinesh-x/" target="_blank">
   <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" style="width:32px;">
 </a>
-<a href="https://github.com/itzdineshx/Iris-flower-classification" target="_blank">
+<a href="https://github.com/itzdineshx/Edunet_AI_internship_2025" target="_blank">
   <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" style="width:32px;">
 </a>
 <a href="mailto:personalaccdinesh@gmail.com" target="_blank">

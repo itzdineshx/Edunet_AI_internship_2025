@@ -198,5 +198,21 @@ This project is part of the Edunet AI Internship 2025 program. Contributions are
 This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for more details.
 
 ---
+---
 
+## **Author**
+**DINESH S**  
+<h3>Connect with me:</h3>
+<a href="https://www.linkedin.com/in/dinesh-x/" target="_blank">
+  <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" style="width:32px;">
+</a>
+<a href="https://github.com/itzdineshx/Iris-flower-classification" target="_blank">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" style="width:32px;">
+</a>
+<a href="mailto:personalaccdinesh@gmail.com" target="_blank">
+  <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Gmail" style="width:32px;">
+</a>
+
+
+---
 **PoseJi © 2025 DINESH S All Rights Reserved**

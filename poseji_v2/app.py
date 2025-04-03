@@ -1,7 +1,6 @@
 from modules import main_ui, config
 
 def main():
-    config.set_config()
     config.inject_custom_css()
     main_ui.main()
 

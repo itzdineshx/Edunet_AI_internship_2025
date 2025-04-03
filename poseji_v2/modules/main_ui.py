@@ -11,14 +11,49 @@ from modules.video_estimation import run_video_estimation, generate_report, save
 from modules.webcam_transformers import WebcamPoseTransformer, WebcamPostureFeedbackTransformer, ExerciseAnalysisTransformer
 from modules.image_analysis import run_image_analysis
 from modules.session_history import display_session_history
+from modules.comparison_mode import compare_pose_images
+
+# --- Custom CSS ---
+def inject_custom_css():
+    st.markdown("""
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .sidebar .sidebar-content {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+        }
+        .main .block-container{
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        .report-button {
+            background-color: #3498db;
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            margin: 0.5rem 0;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
+inject_custom_css()
 
 def main():
     st.title("🏋️ Advanced Pose Estimation")
-    st.markdown("Comprehensive pose analysis and biometric insights")
+    st.markdown("Comprehensive pose analysis and biometric insights", unsafe_allow_html=True)
     
     # ----- Model Selection -----
     model_choice = st.sidebar.selectbox("Select Pose Estimation Model", 
-                                          ["OpenPose", "MediaPipe", "MoveNet"])
+                                        ["OpenPose", "MediaPipe", "MoveNet"])
     MODEL_PATH = "/workspaces/Edunet_AI_internship_2025/models/graph_opt.pb"
     if model_choice == "MoveNet":
         moveNet_model_path = "/workspaces/Edunet_AI_internship_2025/models/movenet_lightning_fp16.tflite"
@@ -35,13 +70,15 @@ def main():
         "Live Webcam Pose Detection",
         "Real-time Posture Feedback",
         "Exercise Analysis & Coaching",
+        "Comparison Mode",
         "Session History"
     ])
     threshold_val = st.sidebar.slider("Confidence Threshold", 0.1, 1.0, 0.5, 0.05)
     enable_alerts = st.sidebar.checkbox("Enable Alerts", value=True)
     alert_sensitivity = st.sidebar.slider("Alert Sensitivity (° deviation)", 0, 30, 10)
 
-    # Clear Session button
+    # Clear Session & Download Session Buttons
+    st.sidebar.markdown("### Session Management")
     if st.sidebar.button("Clear Session"):
         for key in list(st.session_state.keys()):
             del st.session_state[key]
@@ -113,6 +150,12 @@ def main():
                 save_session(metrics, "Video Pose Estimation")
         else:
             st.info("Please upload a video file to start pose estimation.")
+    # Inside your main_ui.py (or wherever appropriate)
+
+    elif analysis_mode == "Comparison Mode":
+        compare_pose_images(analyzer, threshold_val, model_choice)
+
+
     elif analysis_mode == "Session History":
         display_session_history()
     else:
@@ -139,24 +182,24 @@ def main():
             st.info("Please upload an image file for pose analysis.")
     
     # ----- Sidebar Instructions & Footer -----
-    st.sidebar.info("Instructions:")
-    st.sidebar.markdown("""
-    **For Image Analysis:**  
-    1. Upload an image (PNG, JPG, or JPEG).  
-    2. View the pose, metrics, and optionally extract the skeleton image.
+    with st.sidebar.expander("Instructions", expanded=True):
+        st.markdown("""
+        **For Image Analysis:**  
+        1. Upload an image (PNG, JPG, or JPEG).  
+        2. View the pose, metrics, and optionally extract the skeleton image.
 
-    **For Video Analysis:**  
-    1. Upload a video file (MP4, AVI, MOV, or GIF).  
-    2. The video will be processed in real time with processed frames shown and metrics updated below.
-       You can also record the processed video and/or extract a skeleton video.
-       
-    **For Live Webcam Modes:**  
-    1. Allow camera access when prompted.  
-    2. Real‑time pose estimation and overlays will appear.
+        **For Video Analysis:**  
+        1. Upload a video file (MP4, AVI, MOV, or GIF).  
+        2. The video will be processed in real time with processed frames shown and metrics updated below.
+           You can also record the processed video and/or extract a skeleton video.
+           
+        **For Live Webcam Modes:**  
+        1. Allow camera access when prompted.  
+        2. Real‑time pose estimation and overlays will appear.
 
-    **Session History:**  
-    1. View and share saved session data.
-    """)
+        **Session History:**  
+        1. View and share saved session data.
+        """)
     
     st.markdown("---")
     st.markdown("""
@@ -175,3 +218,6 @@ def main():
     </div>
     """, unsafe_allow_html=True)
     st.markdown("---")
+
+if __name__ == "__main__":
+    main()

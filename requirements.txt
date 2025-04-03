@@ -9,3 +9,4 @@ tensorflow
 imageio
 streamlit-webrtc
 matplotlib
+uuid

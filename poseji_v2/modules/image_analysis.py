@@ -6,8 +6,14 @@ import plotly.express as px
 from PIL import Image
 import streamlit as st
 from modules import helpers
+import time
+import uuid
 
-def run_image_analysis(analyzer, image, threshold_val, model_choice, analysis_mode):
+def run_image_analysis(analyzer, image, threshold_val, model_choice, analysis_mode, unique_key=None):
+    # Generate a unique key if "default" is passed
+    if unique_key == "default":
+        unique_key = f"default_{int(time.time()*1000)}"
+    
     # Ensure image is a NumPy array
     if not isinstance(image, np.ndarray):
         image = np.array(image)
@@ -23,7 +29,7 @@ def run_image_analysis(analyzer, image, threshold_val, model_choice, analysis_mo
     pose_image = analyzer.draw_pose(pose_image, points, threshold_val)
     
     # Display original and pose images side by side
-    col1, col2 = st.columns(2)
+    col1, col2 = st.columns(2, gap="large")
     with col1:
         st.subheader("Original Image")
         st.image(image, use_container_width=True)
@@ -89,15 +95,12 @@ def run_image_analysis(analyzer, image, threshold_val, model_choice, analysis_mo
             16: "Right Ankle"
         }
     elif model_choice == "OpenPose":
-        # For OpenPose, use the inverse of the analyzer's BODY_PARTS dictionary
         body_parts = {v: k for k, v in analyzer.BODY_PARTS.items()}
     else:
-        # Fallback: use generic naming
         body_parts = {i: f"Point {i}" for i in range(len(points))}
     
-    # Skeleton extraction option
-    skeleton_bytes = None
-    extract_skel = st.checkbox("Extract Skeleton Image", value=False)
+    # Skeleton extraction option with unique key
+    extract_skel = st.checkbox("Extract Skeleton Image", value=False, key=f"extract_skel_image_{unique_key}")
     if extract_skel:
         if model_choice == "MediaPipe" and hasattr(analyzer, 'draw_skeleton'):
             skeleton_img = analyzer.draw_skeleton(points, image.shape)
@@ -106,7 +109,7 @@ def run_image_analysis(analyzer, image, threshold_val, model_choice, analysis_mo
             skeleton_img = analyzer.draw_pose(blank_img.copy(), points, threshold_val)
         st.image(skeleton_img, caption="Extracted Skeleton", use_container_width=True)
         skeleton_bytes = cv2.imencode('.png', skeleton_img)[1].tobytes()
-        st.download_button("Download Skeleton Image", skeleton_bytes, "skeleton_image.png", "image/png")
+        st.download_button("Download Skeleton Image", skeleton_bytes, "skeleton_image.png", "image/png", key=f"download_skel_{unique_key}")
         st.session_state["last_skeleton"] = skeleton_bytes
     
     st.session_state["last_original"] = cv2.imencode('.png', image)[1].tobytes()
@@ -118,7 +121,6 @@ def run_image_analysis(analyzer, image, threshold_val, model_choice, analysis_mo
     # --- Analysis Modes ---
     if analysis_mode == "Biomechanical Analysis":
         st.header("Biomechanical Insights")
-        # Calculate metrics based on the chosen model
         if model_choice == "MediaPipe":
             metrics = helpers.calculate_biomechanics_mediapipe(points)
         elif model_choice == "MoveNet":
@@ -132,13 +134,12 @@ def run_image_analysis(analyzer, image, threshold_val, model_choice, analysis_mo
             for key, value in metrics.items():
                 st.metric(key, f"{value:.2f}")
         with colB:
-            # Bar chart visualization for joint angles
             angle_keys = list(metrics.keys())
             angle_values = [metrics[k] for k in angle_keys if isinstance(metrics[k], (int, float))]
             if angle_values:
                 bar_fig = go.Figure([go.Bar(x=angle_keys, y=angle_values, marker_color='indianred')])
                 bar_fig.update_layout(title="Joint Angles Comparison", xaxis_title="Joint", yaxis_title="Angle (°)")
-                st.plotly_chart(bar_fig, use_container_width=True)
+                st.plotly_chart(pie_fig, use_container_width=True, key=f"plotly_chart_{uuid.uuid4()}")
         
         if "left_arm_angle" in metrics and "right_arm_angle" in metrics:
             symmetry = abs(metrics["left_arm_angle"] - metrics["right_arm_angle"])
@@ -146,7 +147,6 @@ def run_image_analysis(analyzer, image, threshold_val, model_choice, analysis_mo
     
     elif analysis_mode == "Detailed Metrics":
         st.header("Comprehensive Body Metrics")
-        # Build a DataFrame with actual body part names
         names = [body_parts.get(i, f"Point {i}") for i in range(len(points))]
         point_coords = [p if p is not None else (float('nan'), float('nan')) for p in points]
         metrics_df = pd.DataFrame({
@@ -156,7 +156,6 @@ def run_image_analysis(analyzer, image, threshold_val, model_choice, analysis_mo
         })
         st.dataframe(metrics_df)
         
-        # Scatter plot for spatial distribution
         valid = [(names[i], p) for i, p in enumerate(points) if p is not None]
         if valid:
             valid_names, valid_points = zip(*valid)
@@ -175,20 +174,16 @@ def run_image_analysis(analyzer, image, threshold_val, model_choice, analysis_mo
                 yaxis_title="Y Coordinate",
                 height=400
             )
-            st.plotly_chart(scatter_fig, use_container_width=True)
-            
-            # Extra: Pie chart showing ratio of detected vs missing points
-            total_points = len(points)
-            detected = sum(1 for p in points if p is not None)
-            missing = total_points - detected
+            st.plotly_chart(scatter_fig, use_container_width=True, key=f"scatter_fig{model_choice}_{uuid.uuid4()}")
+
             pie_fig = px.pie(
                 names=["Detected", "Missing"],
-                values=[detected, missing],
+                values=[sum(1 for p in points if p is not None), len(points) - sum(1 for p in points if p is not None)],
                 title="Keypoint Detection Ratio"
             )
-            st.plotly_chart(pie_fig, use_container_width=True)
+            
+            st.plotly_chart(pie_fig, use_container_width=True, key=f"pie_fig{model_choice}_{uuid.uuid4()}")
         
-        # Improved Radar Chart for joint angles
         selected_angles = {}
         if model_choice == "MediaPipe":
             selected_angles = helpers.calculate_biomechanics_mediapipe(points)
@@ -199,7 +194,6 @@ def run_image_analysis(analyzer, image, threshold_val, model_choice, analysis_mo
         if selected_angles:
             categories = list(selected_angles.keys())
             values = [selected_angles[k] for k in categories]
-            # Duplicate first value to close the radar chart loop.
             values += values[:1]
             categories += categories[:1]
             radar_fig = go.Figure()
@@ -227,7 +221,7 @@ def run_image_analysis(analyzer, image, threshold_val, model_choice, analysis_mo
         if valid_points:
             x_coords = [p[0] for p in valid_points]
             y_coords = [p[1] for p in valid_points]
-            z_coords = np.random.rand(len(valid_points)) * 100  # Simulated Z values
+            z_coords = np.random.rand(len(valid_points)) * 100
             fig3d = px.scatter_3d(
                 x=x_coords, y=y_coords, z=z_coords,
                 labels={'x': 'X', 'y': 'Y', 'z': 'Z'},
@@ -239,10 +233,8 @@ def run_image_analysis(analyzer, image, threshold_val, model_choice, analysis_mo
     else:
         st.header("Basic Pose Detection")
     
-    # Optionally, provide a download for a complete analysis report (ZIP file)
-    report_btn = st.button("Download Analysis Report")
+    report_btn = st.button("Download Analysis Report", key=f"download_report_{unique_key}")
     if report_btn:
-        # Create a CSV report of detailed metrics if available
         if metrics_df.empty and points:
             names = [body_parts.get(i, f"Point {i}") for i in range(len(points))]
             point_coords = [p if p is not None else (float('nan'), float('nan')) for p in points]
@@ -251,10 +243,12 @@ def run_image_analysis(analyzer, image, threshold_val, model_choice, analysis_mo
                 'X Coordinate': [p[0] for p in point_coords],
                 'Y Coordinate': [p[1] for p in point_coords]
             })
-        from modules.video_estimation import generate_report  # Reuse your report generator
-        report_zip = generate_report(image, pose_image, metrics_df)
-        st.download_button("Download Report ZIP", report_zip.getvalue(), "pose_analysis_report.zip", "application/zip")
+        from modules.video_estimation import generate_report
+        report_zip = generate_report(np.array(image), pose_image, metrics_df)
+        st.download_button("Download Report ZIP", report_zip.getvalue(), "pose_analysis_report.zip", "application/zip", key=f"report_zip_{unique_key}")
     
-    # Return the pose overlay, detailed metrics (if any), and final calculated metrics
     final_metrics = analyzer.calculate_body_metrics(points)
     return pose_image, metrics_df, final_metrics
+
+if __name__ == "__main__":
+    st.info("Run this module as part of your main application.")

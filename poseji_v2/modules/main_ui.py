@@ -214,7 +214,7 @@ def main():
                 <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white">
             </a>
         </div>
-        <p style="margin-top: 20px;">© 2025 All rights reserved</p>
+        <p style="margin-top: 20px;">Poseji © 2025 All rights reserved</p>
     </div>
     """, unsafe_allow_html=True)
     st.markdown("---")

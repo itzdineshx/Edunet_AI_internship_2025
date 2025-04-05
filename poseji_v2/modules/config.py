@@ -14,38 +14,6 @@ def set_config():
     absl.logging.set_verbosity(absl.logging.ERROR)
     sys.stderr = open(os.devnull, 'w')
 
-import streamlit as st
-import os
-import sys
-import absl.logging
-
-def set_config():
-    st.set_page_config(
-        page_title="PoseJi", 
-        page_icon="/workspaces/Edunet_AI_internship_2025/assets/images/poseji-logo.png", 
-        layout="wide"
-    )
-    # Suppressing unwanted logs
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-    absl.logging.set_verbosity(absl.logging.ERROR)
-    sys.stderr = open(os.devnull, 'w')
-
-import streamlit as st
-import os
-import sys
-import absl.logging
-
-def set_config():
-    st.set_page_config(
-        page_title="PoseJi", 
-        page_icon="/workspaces/Edunet_AI_internship_2025/assets/images/poseji-logo.png", 
-        layout="wide"
-    )
-    # Suppressing unwanted logs
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-    absl.logging.set_verbosity(absl.logging.ERROR)
-    sys.stderr = open(os.devnull, 'w')
-
 def inject_custom_css():
     st.markdown("""
     <style>

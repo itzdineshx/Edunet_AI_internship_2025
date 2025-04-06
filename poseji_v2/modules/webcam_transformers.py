@@ -1,7 +1,36 @@
 import cv2
 import numpy as np
 from streamlit_webrtc import VideoTransformerBase
-from modules.helpers import calculate_angle
+from modules.helpers import calculate_angle  # Ensure this is imported
+
+##############################
+# Advanced Webcam Pose Transformer
+##############################
+class WebcamPoseTransformer(VideoTransformerBase):
+    def __init__(self, analyzer, threshold):
+        self.analyzer = analyzer
+        self.threshold = threshold
+        self.frame_count = 0
+
+    def transform(self, frame):
+        img = frame.to_ndarray(format="bgr24")
+        height, width = img.shape[:2]
+        # Adaptive scaling factors based on frame height
+        font_scale = height / 720 * 0.7
+        thickness = max(1, int(height / 720))
+        points = self.analyzer.detect_pose(img, self.threshold)
+        img = self.analyzer.draw_pose(img, points, self.threshold)
+        
+        # Display real-time metrics overlay every few frames
+        self.frame_count += 1
+        if self.frame_count % 5 == 0 and points is not None:
+            metrics = self.analyzer.calculate_body_metrics(points)
+            y0, dy = int(30 * font_scale), int(30 * font_scale)
+            for i, (key, value) in enumerate(metrics.items()):
+                text = f"{key}: {value:.1f}"
+                cv2.putText(img, text, (int(10 * font_scale), y0 + i * dy), 
+                            cv2.FONT_HERSHEY_SIMPLEX, font_scale, (255, 255, 255), thickness)
+        return img
 
 ##############################
 # Advanced Webcam Posture Feedback Transformer

@@ -71,8 +71,7 @@ def run_video_estimation(analyzer, video_file, threshold, record_video=False, ex
     skeleton_frames = []
     metrics_placeholder = st.empty()  # Placeholder for real-time metrics display
     
-    # Try to obtain total frame count for progress estimation
-    total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
     progress_bar = st.progress(0) if total_frames > 0 else None
     frame_count = 0
 
@@ -82,8 +81,8 @@ def run_video_estimation(analyzer, video_file, threshold, record_video=False, ex
     
     # List to store metrics for each frame
     metrics_list = []
+    cached_metrics = None
 
-    # Process video frame-by-frame
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
@@ -117,17 +116,18 @@ def run_video_estimation(analyzer, video_file, threshold, record_video=False, ex
                 skeleton_frame = analyzer.draw_pose(blank.copy(), points, threshold)
             skeleton_frames.append(skeleton_frame)
         
-        # Update and display real-time metrics
-        metrics = analyzer.calculate_body_metrics(points)
-        metrics_placeholder.markdown("**Realtime Metrics:** " + str(metrics))
+        # Update and display cached real-time metrics every 10 frames to reduce flicker
+        if frame_count % 10 == 0:
+            cached_metrics = analyzer.calculate_body_metrics(points)
+        metrics_placeholder.markdown("**Realtime Metrics:** " + str(cached_metrics))
         
         # Record metrics along with frame number and elapsed time
         current_time = time.time() - start_time
         row = {"frame": frame_count, "time": current_time}
-        row.update(metrics)
+        if cached_metrics is not None:
+            row.update(cached_metrics)
         metrics_list.append(row)
         
-        # Update progress bar if total frame count is available
         frame_count += 1
         if progress_bar:
             progress_bar.progress(min(int((frame_count / total_frames) * 100), 100))
@@ -152,24 +152,24 @@ def run_video_estimation(analyzer, video_file, threshold, record_video=False, ex
     
     # If recording is enabled, write the processed video to file for download
     if record_video and recorded_frames:
-        video_filename = "recorded_pose_video.mp4"
-        imageio.mimwrite(video_filename, recorded_frames, fps=30, codec='libx264')
-        with open(video_filename, "rb") as vid_file:
-            rec_video_bytes = vid_file.read()
-        st.download_button(label="Download Recorded Video", 
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_vid:
+            imageio.mimwrite(temp_vid.name, recorded_frames, fps=30, codec='libx264')
+            with open(temp_vid.name, "rb") as vid_file:
+                rec_video_bytes = vid_file.read()
+        st.download_button(label="Download Processed Video", 
                            data=rec_video_bytes, 
-                           file_name=video_filename, 
+                           file_name="recorded_pose_video.mp4", 
                            mime="video/mp4")
     
     # If skeleton extraction is enabled, write the skeleton video to file for download
     if extract_skeleton and skeleton_frames:
-        skeleton_filename = "extracted_skeleton_video.mp4"
-        imageio.mimwrite(skeleton_filename, skeleton_frames, fps=30, codec='libx264')
-        with open(skeleton_filename, "rb") as vid_file:
-            skel_video_bytes = vid_file.read()
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_vid:
+            imageio.mimwrite(temp_vid.name, skeleton_frames, fps=30, codec='libx264')
+            with open(temp_vid.name, "rb") as vid_file:
+                skel_video_bytes = vid_file.read()
         st.download_button(label="Download Skeleton Video", 
                            data=skel_video_bytes, 
-                           file_name=skeleton_filename, 
+                           file_name="skeleton_video.mp4", 
                            mime="video/mp4")
     
     metrics_final = analyzer.calculate_body_metrics(last_points) if last_points is not None else {}

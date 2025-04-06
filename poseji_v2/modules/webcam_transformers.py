@@ -1,35 +1,43 @@
 import cv2
 import numpy as np
 from streamlit_webrtc import VideoTransformerBase
-from modules.helpers import calculate_angle  # Ensure this is imported
+from modules.helpers import calculate_angle
 
-##############################
-# Advanced Webcam Pose Transformer
-##############################
-class WebcamPoseTransformer(VideoTransformerBase):
-    def __init__(self, analyzer, threshold):
+class WebcamPostureFeedbackTransformer(VideoTransformerBase):
+    def __init__(self, analyzer, threshold, enable_alerts, alert_sensitivity):
         self.analyzer = analyzer
         self.threshold = threshold
-        self.frame_count = 0
+        self.enable_alerts = enable_alerts
+        self.alert_sensitivity = alert_sensitivity
+        self.frame_counter = 0
+        self.cached_metrics = None
 
     def transform(self, frame):
         img = frame.to_ndarray(format="bgr24")
         height, width = img.shape[:2]
-        # Adaptive scaling factors based on frame height
-        font_scale = height / 720 * 0.7
+        font_scale = height / 720 * 0.8
         thickness = max(1, int(height / 720))
         points = self.analyzer.detect_pose(img, self.threshold)
         img = self.analyzer.draw_pose(img, points, self.threshold)
         
-        # Display real-time metrics overlay every few frames
-        self.frame_count += 1
-        if self.frame_count % 5 == 0 and points is not None:
-            metrics = self.analyzer.calculate_body_metrics(points)
-            y0, dy = int(30 * font_scale), int(30 * font_scale)
-            for i, (key, value) in enumerate(metrics.items()):
-                text = f"{key}: {value:.1f}"
-                cv2.putText(img, text, (int(10 * font_scale), y0 + i * dy), 
-                            cv2.FONT_HERSHEY_SIMPLEX, font_scale, (255, 255, 255), thickness)
+        # Update cached metrics every 10 frames
+        self.frame_counter += 1
+        if self.frame_counter % 10 == 0:
+            self.cached_metrics = self.analyzer.calculate_body_metrics(points)
+        
+        metrics = self.cached_metrics if self.cached_metrics is not None else {}
+        if metrics and "torso_alignment" in metrics:
+            deviation = abs(180 - metrics["torso_alignment"])
+            # Choose border color based on deviation
+            border_color = (0, 0, 255) if deviation > self.alert_sensitivity else (0, 255, 0)
+            # Draw a border around the frame with adaptive thickness
+            cv2.rectangle(img, (0, 0), (width - 1, height - 1), border_color, thickness * 4)
+            # Overlay feedback if deviation is high
+            if deviation > self.alert_sensitivity and self.enable_alerts:
+                cv2.putText(img, "Adjust your posture!", (int(50 * font_scale), int(50 * font_scale)),
+                            cv2.FONT_HERSHEY_SIMPLEX, font_scale, (0, 0, 255), thickness)
+            cv2.putText(img, f"Torso Alignment: {metrics['torso_alignment']:.1f}°", (int(50 * font_scale), int(90 * font_scale)),
+                        cv2.FONT_HERSHEY_SIMPLEX, font_scale, border_color, thickness)
         return img
 
 ##############################

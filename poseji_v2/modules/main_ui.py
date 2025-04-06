@@ -57,7 +57,7 @@ def main():
     
     # ----- Model Selection -----
     model_choice = st.sidebar.selectbox("Select Pose Estimation Model", 
-                                        ["OpenPose", "MediaPipe", "MoveNet"])
+                                        ["MediaPipe", "MoveNet", "OpenPose"])
     # Update the model paths if needed:
     MODEL_PATH = "poseji_v2/modules/graph_opt.pb"
     if model_choice == "MoveNet":
@@ -71,11 +71,11 @@ def main():
         "Biomechanical Analysis", 
         "Detailed Metrics",
         "3D Pose Visualization",
+        "Comparison Mode",
         "Video Pose Estimation",
         "Live Webcam Pose Detection",
         "Real-time Posture Feedback",
         "Exercise Analysis & Coaching",
-        "Comparison Mode",
         "Session History"
     ])
     threshold_val = st.sidebar.slider("Confidence Threshold", 0.1, 1.0, 0.5, 0.05)

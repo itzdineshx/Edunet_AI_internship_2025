@@ -8,7 +8,11 @@ import pandas as pd
 
 from modules.pose_estimators import get_pose_analyzer
 from modules.video_estimation import run_video_estimation, generate_report, save_session
-from modules.webcam_transformers import WebcamPoseTransformer, WebcamPostureFeedbackTransformer, ExerciseAnalysisTransformer
+from modules.webcam_transformers import (
+    WebcamPoseTransformer, 
+    WebcamPostureFeedbackTransformer, 
+    ExerciseAnalysisTransformer
+)
 from modules.image_analysis import run_image_analysis
 from modules.session_history import display_session_history
 from modules.comparison_mode import compare_pose_images
@@ -25,7 +29,7 @@ def inject_custom_css():
             background: linear-gradient(135deg, #2c3e50, #3498db);
             color: white;
         }
-        .main .block-container{
+        .main .block-container {
             padding-top: 2rem;
             padding-bottom: 2rem;
         }
@@ -54,6 +58,7 @@ def main():
     # ----- Model Selection -----
     model_choice = st.sidebar.selectbox("Select Pose Estimation Model", 
                                         ["OpenPose", "MediaPipe", "MoveNet"])
+    # Update the model paths if needed:
     MODEL_PATH = "poseji_v2/modules/graph_opt.pb"
     if model_choice == "MoveNet":
         moveNet_model_path = "poseji_v2/modules/movenet_lightning_fp16.tflite"
@@ -119,19 +124,22 @@ def main():
         st.header("Live Webcam Pose Detection")
         from streamlit_webrtc import webrtc_streamer
         webrtc_streamer(key="live-webcam",
-                        video_transformer_factory=lambda: WebcamPoseTransformer(analyzer, threshold_val))
+                        video_transformer_factory=lambda: WebcamPoseTransformer(analyzer, threshold_val),
+                        audio_receiver_size=0)
     elif analysis_mode == "Real-time Posture Feedback":
         st.header("Real-time Posture Feedback")
         st.info("Allow camera access. Alerts will be shown based on your posture.")
         from streamlit_webrtc import webrtc_streamer
         webrtc_streamer(key="posture-feedback",
-                        video_transformer_factory=lambda: WebcamPostureFeedbackTransformer(analyzer, threshold_val, enable_alerts, alert_sensitivity))
+                        video_transformer_factory=lambda: WebcamPostureFeedbackTransformer(analyzer, threshold_val, enable_alerts, alert_sensitivity),
+                        audio_receiver_size=0)
     elif analysis_mode == "Exercise Analysis & Coaching":
         st.header("Exercise Analysis & Coaching")
         st.info("Perform squats in front of your webcam. The app will count your reps!")
         from streamlit_webrtc import webrtc_streamer
         webrtc_streamer(key="exercise-analysis",
-                        video_transformer_factory=lambda: ExerciseAnalysisTransformer(analyzer, threshold_val))
+                        video_transformer_factory=lambda: ExerciseAnalysisTransformer(analyzer, threshold_val),
+                        audio_receiver_size=0)
     elif analysis_mode == "Video Pose Estimation":
         st.header("Video Pose Estimation")
         video_file = st.file_uploader("Upload Video for Pose Analysis", type=["mp4", "avi", "mov", "gif"])
@@ -150,16 +158,12 @@ def main():
                 save_session(metrics, "Video Pose Estimation")
         else:
             st.info("Please upload a video file to start pose estimation.")
-    # Inside your main_ui.py (or wherever appropriate)
-
     elif analysis_mode == "Comparison Mode":
+        from modules.comparison_mode import compare_pose_images
         compare_pose_images(analyzer, threshold_val, model_choice)
-
-
     elif analysis_mode == "Session History":
         display_session_history()
     else:
-        # Image Analysis Modes: "Basic Pose Detection", "Biomechanical Analysis", "Detailed Metrics", "3D Pose Visualization"
         uploaded_file = st.file_uploader("Upload Image for Pose Analysis", type=['jpg', 'jpeg', 'png'])
         if uploaded_file is not None:
             try:
@@ -214,7 +218,7 @@ def main():
                 <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white">
             </a>
         </div>
-        <p style="margin-top: 20px;">Poseji © 2025 All rights reserved</p>
+        <p style="margin-top: 20px;">PoseJi © 2025 All rights reserved</p>
     </div>
     """, unsafe_allow_html=True)
     st.markdown("---")

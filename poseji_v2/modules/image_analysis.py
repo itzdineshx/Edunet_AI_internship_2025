@@ -139,7 +139,7 @@ def run_image_analysis(analyzer, image, threshold_val, model_choice, analysis_mo
             if angle_values:
                 bar_fig = go.Figure([go.Bar(x=angle_keys, y=angle_values, marker_color='indianred')])
                 bar_fig.update_layout(title="Joint Angles Comparison", xaxis_title="Joint", yaxis_title="Angle (°)")
-                st.plotly_chart(pie_fig, use_container_width=True, key=f"plotly_chart_{uuid.uuid4()}")
+                st.plotly_chart(bar_fig, use_container_width=True, key=f"plotly_chart_{uuid.uuid4()}")
         
         if "left_arm_angle" in metrics and "right_arm_angle" in metrics:
             symmetry = abs(metrics["left_arm_angle"] - metrics["right_arm_angle"])

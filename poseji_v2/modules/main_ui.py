@@ -54,9 +54,9 @@ def main():
     # ----- Model Selection -----
     model_choice = st.sidebar.selectbox("Select Pose Estimation Model", 
                                         ["OpenPose", "MediaPipe", "MoveNet"])
-    MODEL_PATH = "/workspaces/Edunet_AI_internship_2025/poseji_v2/graph_opt.pb"
+    MODEL_PATH = "poseji_v2/modules/graph_opt.pb"
     if model_choice == "MoveNet":
-        moveNet_model_path = "/workspaces/Edunet_AI_internship_2025/poseji_v2/movenet_lightning_fp16.tflite"
+        moveNet_model_path = "poseji_v2/modules/movenet_lightning_fp16.tflite"
         analyzer = get_pose_analyzer(model_choice, moveNet_model_path)
     else:
         analyzer = get_pose_analyzer(model_choice, MODEL_PATH)

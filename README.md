@@ -8,8 +8,11 @@
 
 ## Live Demo
 
-Try the new Version 2 app here: [PoseJi v2](https://posejiv2.streamlit.app/)
-
+<div style="text-align: center; margin-bottom: 1rem;">
+  <a href="https://posejiv2.streamlit.app/" target="_blank" style="background-color: #3498db; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-size: 1.1rem; font-weight: bold;">
+    Try PoseJi v2 Now!
+  </a>
+</div>
 ---
 
 ## What's New in Version 2?

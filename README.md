@@ -1,4 +1,4 @@
-# PoseJi: Advanced Human Pose Estimation (version 2)🤖
+# PoseJi: Advanced Human Pose Estimation (Version 2) 🤖
 
 ![PoseJi logo](assets/images/poseji-log0.gif)
 
@@ -8,7 +8,48 @@
 
 ## Live Demo
 
-Try it now: [Advanced PoseJi App](https://advanced-humanpose-estimation.streamlit.app/)
+Try the new Version 2 app here: [PoseJi v2](https://posejiv2.streamlit.app/)
+
+---
+
+## What's New in Version 2?
+
+**PoseJi Version 2** builds upon the solid foundation of Version 1 with several significant enhancements:
+- **Enhanced Modular Code Structure:**  
+  The codebase has been reorganized into more modular components. New modules for Comparison Mode, Yoga Pose Analysis, and Gesture Recognition have been added to expand the app’s functionality.
+- **Expanded Analysis Modes:**  
+  In addition to the modes available in Version 1 (Basic Pose Detection, Biomechanical Analysis, Detailed Metrics, 3D Pose Visualization, Video Pose Estimation, Live Webcam Pose Detection, Real‑time Posture Feedback, and Exercise Analysis & Coaching), Version 2 introduces:
+  - **Comparison Mode:** Upload two images to compare pose estimations side by side.
+- **Improved Performance:**  
+  Optimizations in media processing and keypoint smoothing result in better real‑time performance and reduced flicker in metric displays.
+- **Revamped User Interface:**  
+  The user interface now features a modern, mobile-responsive design with enhanced sidebar management, improved session management, and clearer visualizations.
+
+---
+
+## Model Structure and Differences: Version 1 vs. Version 2
+
+### **Version 1:**
+- **Models Supported:**  
+  - **OpenPose:** Uses OpenCV’s DNN module to load a frozen graph (`graph_opt.pb`) for keypoint detection.
+  - **MediaPipe Pose:** Leverages Google’s MediaPipe Pose solution for efficient and real‑time pose detection.
+  - **MoveNet:** Utilizes TensorFlow Lite’s MoveNet model (`movenet_lightning_fp16.tflite`) for fast and accurate pose estimation.
+- **Functionality:**  
+  - Basic pose detection in images and videos.
+  - Webcam integration and basic metrics display.
+  - Session management and data export as ZIP files.
+
+### **Version 2:**
+- **Models Supported:**  
+  Version 2 continues to support the same models as Version 1, with updates to paths and improved inference (smoothing and optional preprocessing) for more stable keypoint detection.
+- **New & Enhanced Features:**  
+  - **Comparison Mode:** Compare two images side by side with detailed metrics and visualizations.
+  - **Improved UI/UX:** A modern layout with custom CSS, enhanced sidebar instructions, and session management.
+  - **Expanded Analysis Modes:** More robust modes such as advanced detailed metrics, 3D visualization, and performance optimizations for video processing.
+- **Code Organization:**  
+  The code is further modularized under the `poseji_v2/modules/` directory, making it easier to maintain and extend.
+- **Performance:**  
+  Better smoothing of keypoints and reduced flicker in real‑time metrics; efficient media handling via temporary files and dynamic frame rate adjustments.
 
 ---
 
@@ -16,27 +57,28 @@ Try it now: [Advanced PoseJi App](https://advanced-humanpose-estimation.streamli
 
 - **Real-time Pose Detection:**  
   Analyze images and videos using advanced models for fast and accurate pose estimation.
-
 - **Customizable Settings:**  
-  Adjust parameters like confidence threshold and calibration factor to suit your needs.
-
+  Adjust confidence thresholds, calibration factors, and more.
 - **Multiple Analysis Modes:**  
-  Choose from basic pose detection, biomechanical analysis (joint angles, posture evaluation), detailed metrics, 3D visualization, video pose estimation, live webcam pose detection, real‑time posture feedback, exercise analysis & coaching, comparison mode, and session history.
-
+  Choose from:
+  - Basic Pose Detection
+  - Biomechanical Analysis (angles, posture evaluation)
+  - Detailed Metrics
+  - 3D Pose Visualization
+  - Video Pose Estimation
+  - Live Webcam Pose Detection
+  - Real‑time Posture Feedback
+  - Exercise Analysis & Coaching
+  - Comparison Mode
+  - Session History
 - **Video & Image Processing:**  
-  Upload images (PNG, JPG, JPEG) and videos (MP4, AVI, MOV, GIF) for detailed pose analysis. Extract skeleton overlays and download results.
-
+  Upload images (PNG, JPG, JPEG) and videos (MP4, AVI, MOV, GIF) for detailed analysis.
 - **Live Webcam Integration:**  
-  Access your device’s webcam for live pose estimation, posture feedback, and exercise analysis (e.g., squat counting).
-
+  Access the webcam for live pose estimation with real‑time feedback.
 - **Session Management:**  
-  Save session outputs (images, videos, metrics) and download all results as a ZIP file.
-
+  Save session outputs and download all results as a ZIP file.
 - **User-Friendly Interface:**  
-  Designed with a modern, mobile-responsive layout and an enhanced sidebar for easy navigation.
-
-- **Comparison Mode (New!):**  
-  Upload two images and compare their pose estimations side by side with detailed metrics for progress tracking or side-by-side analysis.
+  Modern, mobile-responsive layout with a dynamic sidebar for easy navigation.
 
 ---
 
@@ -135,7 +177,7 @@ The application supports multiple pose estimation models:
 - **Image Upload:**  
   Drag and drop PNG, JPG, or JPEG files.
 - **Video Upload:**  
-  Upload MP4, AVI, MOV, or GIF files for real-time analysis.
+  Upload MP4, AVI, MOV, or GIF files for detailed pose analysis.
 - **Live Webcam:**  
   Access live video feed for instant pose estimation.
 
@@ -155,7 +197,7 @@ The application supports multiple pose estimation models:
 ![Demo Video](Demo/images/Demo_video.gif)
 
 ### Sample Image
-![Pose Estimation Sample image](Demo/images/Advanced-Pose-Estimation_sample.png)
+![Pose Estimation Sample Image](Demo/images/Advanced-Pose-Estimation_sample.png)
 
 ### Sample Video
 ![Pose Estimation Sample Video](assets/images/pose-gif.gif)
@@ -165,7 +207,7 @@ The application supports multiple pose estimation models:
 ## How to Run the App
 
 ### Prerequisites
-- Python 3.8 or higher
+- Python 3.8 or higher  
 - Install dependencies with:
   ```bash
   pip install -r requirements.txt
@@ -236,6 +278,3 @@ This project is licensed under the **Apache License 2.0**. See the [LICENSE](LIC
 ---
 
 **PoseJi © 2025 DINESH S All Rights Reserved**
-```
-
----

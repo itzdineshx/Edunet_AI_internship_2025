@@ -204,7 +204,7 @@ The application supports multiple pose estimation models:
 ![Demo Video](Demo/videos/posejiv2_tutorial.gif)
 
 ### Sample Image
-![Pose Estimation Sample Image](Demo/images/Advanced-Pose-Estimation_sample.png)
+![Pose Estimation Sample Image](Demo/images/posejiv2_sample.png)
 
 ### Sample Video
 ![Pose Estimation Sample Video](Demo/videos/starc_pose.gif)

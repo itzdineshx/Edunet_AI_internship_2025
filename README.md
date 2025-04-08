@@ -13,6 +13,7 @@
     Try PoseJi v2 Now!
   </a>
 </div>
+
 ---
 
 ## What's New in Version 2?

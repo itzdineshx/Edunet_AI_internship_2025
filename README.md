@@ -8,10 +8,10 @@
 
 ## Live Demo
 
-<div style="text-align: center; margin-bottom: 1rem;">
-  <a href="https://posejiv2.streamlit.app/" target="_blank" style="background-color: #3498db; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-size: 1.1rem; font-weight: bold;">
-    Try PoseJi v2 Now!
-  </a>
+<div style="display: flex; justify-content: center; gap: 20px;">
+    <a href="https://posejiv2.streamlit.app/" target="_blank">
+        <img src="https://img.shields.io/badge/PoseJi_v2-Visit%20App-0088CC?style=for-the-badge&logo=streamlit&logoColor=white" alt="PoseJi v2">
+    </a>
 </div>
 
 ---

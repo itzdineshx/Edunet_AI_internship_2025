@@ -1,4 +1,4 @@
-# PoseJi: Advanced Human Pose Estimation (version 1)🤖
+# PoseJi: Advanced Human Pose Estimation (version 2)🤖
 
 ![PoseJi logo](assets/images/poseji-log0.gif)
 
@@ -21,7 +21,7 @@ Try it now: [Advanced PoseJi App](https://advanced-humanpose-estimation.streamli
   Adjust parameters like confidence threshold and calibration factor to suit your needs.
 
 - **Multiple Analysis Modes:**  
-  Choose from basic pose detection, biomechanical analysis (joint angles, posture evaluation), detailed metrics, and 3D visualization.
+  Choose from basic pose detection, biomechanical analysis (joint angles, posture evaluation), detailed metrics, 3D visualization, video pose estimation, live webcam pose detection, real‑time posture feedback, exercise analysis & coaching, comparison mode, and session history.
 
 - **Video & Image Processing:**  
   Upload images (PNG, JPG, JPEG) and videos (MP4, AVI, MOV, GIF) for detailed pose analysis. Extract skeleton overlays and download results.
@@ -35,6 +35,9 @@ Try it now: [Advanced PoseJi App](https://advanced-humanpose-estimation.streamli
 - **User-Friendly Interface:**  
   Designed with a modern, mobile-responsive layout and an enhanced sidebar for easy navigation.
 
+- **Comparison Mode (New!):**  
+  Upload two images and compare their pose estimations side by side with detailed metrics for progress tracking or side-by-side analysis.
+
 ---
 
 ## Project Structure
@@ -43,19 +46,38 @@ Try it now: [Advanced PoseJi App](https://advanced-humanpose-estimation.streamli
 itzdineshx-edunet_ai_internship_2025/
 ├── README.md
 ├── LICENSE
+├── packages.txt
 ├── requirements.txt
+├── assets/
+│   └── images/
+│       └── videos/
 ├── Demo/
 │   ├── images/
-│   │   └── Advanced-Pose-Estimation_sample.png
 │   └── videos/
-│       └── Demo_video.gif
-├── assets/
-│   └── images/         # Additional UI assets
+│       └── streamlit-app-2025-01-26-20-01-13.webm
+├── internship_files/
 ├── models/
 │   ├── graph_opt.pb
 │   ├── movenet_lightning_fp16.tflite
 │   └── saved_model.pb
+├── poseji_v2/
+│   ├── app.py
+│   └── modules/
+│       ├── __init__.py
+│       ├── comparison_mode.py
+│       ├── config.py
+│       ├── graph_opt.pb
+│       ├── helpers.py
+│       ├── image_analysis.py
+│       ├── main_ui.py
+│       ├── movenet_lightning_fp16.tflite
+│       ├── pose_estimators.py
+│       ├── session_history.py
+│       ├── video_estimation.py
+│       ├── webcam_transformers.py
+│       └── __pycache__/
 ├── src/
+│   ├── app.py
 │   ├── graph_opt.pb
 │   ├── movenet_lightning_fp16.tflite
 │   ├── saved_model.pb
@@ -104,6 +126,7 @@ The application supports multiple pose estimation models:
   - Live Webcam Pose Detection
   - Real‑time Posture Feedback
   - Exercise Analysis & Coaching
+  - Comparison Mode
   - Session History
 - **Exercise Analysis:**  
   Choose an exercise type (currently supports Squats) for tracking repetitions.
@@ -162,13 +185,10 @@ The application supports multiple pose estimation models:
 
 - **Sports Training:**  
   Analyze and optimize athletes' movements.
-
 - **Fitness Tracking:**  
   Monitor posture and exercise form to improve workouts.
-
 - **Rehabilitation:**  
   Track progress in physical therapy and recovery.
-
 - **Gaming & AR/VR:**  
   Integrate pose estimation into interactive applications.
 
@@ -189,18 +209,18 @@ The application supports multiple pose estimation models:
 
 ## Contributors
 
-This project is part of the Edunet AI Internship 2025 program. Contributions are welcome to further enhance functionality and extend features.
+This project is part of the **Edunet AI Internship 2025** program. Contributions are welcome to further enhance functionality and extend features.
 
 ---
 
 ## License
 
-This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for more details.
+This project is licensed under the **Apache License 2.0**. See the [LICENSE](LICENSE) file for more details.
 
 ---
----
 
-## **Author**
+## Author
+
 **DINESH S**  
 <h3>Connect with me:</h3>
 <a href="https://www.linkedin.com/in/dinesh-x/" target="_blank">
@@ -213,6 +233,9 @@ This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE
   <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Gmail" style="width:32px;">
 </a>
 
+---
+
+**PoseJi © 2025 DINESH S All Rights Reserved**
+```
 
 ---
-**PoseJi © 2025 DINESH S All Rights Reserved**

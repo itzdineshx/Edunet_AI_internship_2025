@@ -9,6 +9,9 @@
 ## Live Demo
 
 <div style="display: flex; justify-content: center; gap: 20px;">
+    <a href="https://huggingface.co/spaces/DINESH-X/Poseji_version_1" target="_blank">
+        <img src="https://img.shields.io/badge/PoseJi%20v1-HuggingFace_Spaces-blue?style=for-the-badge&logo=huggingface&logoColor=white" alt="PoseJi v1">
+    </a>
     <a href="https://posejiv2.streamlit.app/" target="_blank">
         <img src="https://img.shields.io/badge/PoseJi_v2-Visit%20App-0088CC?style=for-the-badge&logo=streamlit&logoColor=white" alt="PoseJi v2">
     </a>

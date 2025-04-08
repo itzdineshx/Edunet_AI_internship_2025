@@ -207,7 +207,7 @@ The application supports multiple pose estimation models:
 ![Pose Estimation Sample Image](Demo/images/Advanced-Pose-Estimation_sample.png)
 
 ### Sample Video
-![Pose Estimation Sample Video](assets/images/pose-gif.gif)
+![Pose Estimation Sample Video](Demo/videos/starc_pose.gif)
 
 ---
 
